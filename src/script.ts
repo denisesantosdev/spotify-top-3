@@ -15,17 +15,21 @@ async function loginToSpotify() {
   }
 }
 
-if (code) {
-  const accessToken =
-    localStorage.getItem("access_token") ||
-    (await getAccessToken(clientId, code));
-
-  const refresh_token = await getRefreshToken();
-
-  localStorage.setItem("refresh_token", refresh_token);
-
-  fetchItems(accessToken);
+async function loadAccessToken() {
+  if (code) {
+    const accessToken =
+      localStorage.getItem("access_token") ||
+      (await getAccessToken(clientId, code));
+  
+    const refresh_token = await getRefreshToken();
+  
+    localStorage.setItem("refresh_token", refresh_token);
+  
+    fetchItems(accessToken);
+  }
 }
+
+loadAccessToken()
 
 async function getRefreshToken() {
   const refreshToken = localStorage.getItem("refresh_token");
@@ -104,7 +108,7 @@ async function fetchItems(accessToken: any) {
   populateUI(profile, topArtists, topTracks);
 }
 
-export async function redirectToAuthCodeFlow(clientId: string) {
+async function redirectToAuthCodeFlow(clientId: string) {
   const verifier = generateCodeVerifier(128);
   const challenge = await generateCodeChallenge(verifier);
 
@@ -141,7 +145,7 @@ async function generateCodeChallenge(codeVerifier: string) {
     .replace(/=+$/, "");
 }
 
-export async function getAccessToken(
+async function getAccessToken(
   clientId: string,
   code: any
 ): Promise<string> {
