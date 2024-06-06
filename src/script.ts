@@ -16,10 +16,17 @@ async function loginToSpotify() {
 }
 
 async function loadAccessToken() {
+  let accessToken 
   if (code) {
-    const accessToken =
+
+    if(!localStorage.getItem("access_token")){
+      accessToken = (await getAccessToken(clientId, code))
+    } else {
+      accessToken = localStorage.getItem("access_token")
+    }
+   /*  const accessToken =
       localStorage.getItem("access_token") ||
-      (await getAccessToken(clientId, code));
+      (await getAccessToken(clientId, code)); */
   
     const refresh_token = await getRefreshToken();
   
@@ -163,6 +170,8 @@ async function getAccessToken(
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: params,
   });
+
+  //console.log(await result.json());
 
   const { access_token, refresh_token } = await result.json();
 
