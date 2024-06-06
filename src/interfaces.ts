@@ -5,6 +5,7 @@ interface UserProfile {
 }
 
 interface TopArtists {
+  map: any;
   artistName: string;
   artistGenre: string[];
   artistUrl: string;
@@ -12,6 +13,7 @@ interface TopArtists {
 }
 
 interface TopTracks {
+  map: any;
   trackName: string;
   trackArtists: object[];
   trackAlbum: {
