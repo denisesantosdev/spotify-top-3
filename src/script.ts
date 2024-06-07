@@ -4,7 +4,7 @@ const clientId = "16ed7b7faf094b429335cfc77338edd1";
 const scopes = "user-read-private user-read-email user-top-read"
 const params = new URLSearchParams(window.location.search);
 //const redirect_uri = "http://localhost:5173/callback";
-const redirect_uri = "https://spotify-top-3.netlify.app/this-page-exists";
+const redirect_uri = "https://spotify-top-3.netlify.app/callback";
 const code = params.get("code");
 
 document.getElementById("login-btn")?.addEventListener("click", loginToSpotify);
@@ -174,7 +174,7 @@ async function getAccessToken(
     body: params,
   });
 
-  console.log(await result.json());
+  //console.log(await result.json());
 
   const { access_token, refresh_token } = await result.json();
 
