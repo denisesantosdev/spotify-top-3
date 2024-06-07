@@ -1,10 +1,10 @@
 import { UserProfile, TopArtists, TopTracks } from "./interfaces";
 
 const clientId = "16ed7b7faf094b429335cfc77338edd1";
-const scopes = "user-read-private user-read-email user-top-read"
+const scopes = "user-read-private user-read-email user-top-read";
 const params = new URLSearchParams(window.location.search);
 //const redirect_uri = "http://localhost:5173/callback";
-const redirect_uri = "https://spotify-top-3.netlify.app/callback";
+const redirect_uri = "https://spotify-top-3.netlify.app/";
 const code = params.get("code");
 
 document.getElementById("login-btn")?.addEventListener("click", loginToSpotify);
@@ -12,34 +12,32 @@ document.getElementById("login-btn")?.addEventListener("click", loginToSpotify);
 async function loginToSpotify() {
   if (!code) {
     redirectToAuthCodeFlow(clientId);
-
-  history.pushState(null, '', 'https://spotify-top-3.netlify.app/');
-
   }
 }
 
 async function loadAccessToken() {
-  let accessToken 
+  let accessToken;
   if (code) {
+    if (!localStorage.getItem("access_token")) {
+      accessToken = await getAccessToken(clientId, code);
 
-    if(!localStorage.getItem("access_token")){
-      accessToken = (await getAccessToken(clientId, code))
+     history.pushState(null, "", "https://spotify-top-3.netlify.app/");
     } else {
-      accessToken = localStorage.getItem("access_token")
+      accessToken = localStorage.getItem("access_token");
     }
-   /*  const accessToken =
+    /*  const accessToken =
       localStorage.getItem("access_token") ||
       (await getAccessToken(clientId, code)); */
-  
+
     const refresh_token = await getRefreshToken();
-  
+
     localStorage.setItem("refresh_token", refresh_token);
-  
+
     fetchItems(accessToken);
   }
 }
 
-loadAccessToken()
+loadAccessToken();
 
 async function getRefreshToken() {
   const refreshToken = localStorage.getItem("refresh_token");
@@ -155,10 +153,7 @@ async function generateCodeChallenge(codeVerifier: string) {
     .replace(/=+$/, "");
 }
 
-async function getAccessToken(
-  clientId: string,
-  code: any
-): Promise<string> {
+async function getAccessToken(clientId: string, code: any): Promise<string> {
   const verifier = localStorage.getItem("verifier");
 
   const params = new URLSearchParams();
@@ -216,7 +211,9 @@ function populateUI(
   topTracks: TopTracks
 ) {
   document.getElementById("profile")!.innerHTML = `
-    <img src=${profile.profileImage || `https://robohash.org/${profile.userName}.png`} alt="">
+    <img src=${
+      profile.profileImage || `https://robohash.org/${profile.userName}.png`
+    } alt="">
     <a href=${profile.profileUrl} target="_blank">
       <p id="username">${profile.userName}</p>
     </a>
@@ -245,9 +242,11 @@ function populateUI(
         </a>
 
         <span>${track.trackArtists
-          .map((artist: any) => `<a href=${artist.url} target="_blank">
+          .map(
+            (artist: any) => `<a href=${artist.url} target="_blank">
             ${artist.name}
-          </a>`)
+          </a>`
+          )
           .join(" | ")}
         </span>
         
