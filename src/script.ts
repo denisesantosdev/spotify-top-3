@@ -12,6 +12,9 @@ document.getElementById("login-btn")?.addEventListener("click", loginToSpotify);
 async function loginToSpotify() {
   if (!code) {
     redirectToAuthCodeFlow(clientId);
+
+  history.pushState(null, '', 'https://spotify-top-3.netlify.app/');
+
   }
 }
 
@@ -177,8 +180,6 @@ async function getAccessToken(
 
   localStorage.setItem("access_token", access_token);
   localStorage.setItem("refresh_token", refresh_token);
-
-  history.pushState(null, '', 'https://spotify-top-3.netlify.app/');
 
   return access_token;
 }
