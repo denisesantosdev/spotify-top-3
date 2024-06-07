@@ -34,7 +34,7 @@ async function loadAccessToken() {
   
     fetchItems(accessToken);
 
-    history.pushState(null, '', redirect_uri);
+    history.pushState(null, '', 'https://spotify-top-3.netlify.app/');
 
   }
 }
