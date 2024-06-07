@@ -21,7 +21,7 @@ async function loadAccessToken() {
     if (!localStorage.getItem("access_token")) {
       accessToken = await getAccessToken(clientId, code);
 
-     //history.pushState(null, "", "https://spotify-top-3.netlify.app/");
+     history.pushState(null, "", "https://spotify-top-3.netlify.app/");
     } else {
       accessToken = localStorage.getItem("access_token");
     }
