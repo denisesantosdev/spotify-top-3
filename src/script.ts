@@ -33,9 +33,6 @@ async function loadAccessToken() {
     localStorage.setItem("refresh_token", refresh_token);
   
     fetchItems(accessToken);
-
-    history.pushState(null, '', 'https://spotify-top-3.netlify.app/');
-
   }
 }
 
@@ -180,6 +177,8 @@ async function getAccessToken(
 
   localStorage.setItem("access_token", access_token);
   localStorage.setItem("refresh_token", refresh_token);
+
+  history.pushState(null, '', 'https://spotify-top-3.netlify.app/');
 
   return access_token;
 }
