@@ -18,6 +18,7 @@ async function loginToSpotify() {
 async function loadAccessToken() {
   let accessToken 
   if (code) {
+    console.log(code);
 
     if(!localStorage.getItem("access_token")){
       accessToken = (await getAccessToken(clientId, code))
