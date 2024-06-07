@@ -34,6 +34,8 @@ async function loadAccessToken() {
     localStorage.setItem("refresh_token", refresh_token);
   
     fetchItems(accessToken);
+
+    window.location.href = '/'
   }
 }
 
