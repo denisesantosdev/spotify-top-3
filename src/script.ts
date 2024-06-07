@@ -171,7 +171,7 @@ async function getAccessToken(
     body: params,
   });
 
-  //console.log(await result.json());
+  console.log(await result.json());
 
   const { access_token, refresh_token } = await result.json();
 
