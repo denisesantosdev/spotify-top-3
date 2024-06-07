@@ -34,7 +34,8 @@ async function loadAccessToken() {
   
     fetchItems(accessToken);
 
-    window.location.href = '/'
+    history.pushState(null, '', redirect_uri);
+
   }
 }
 
